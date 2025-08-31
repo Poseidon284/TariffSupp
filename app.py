@@ -4,6 +4,7 @@ from streamlit_pdf_viewer import pdf_viewer
 from RAG_utils import rag_chain, upsert_file_to_chroma, del_collection
 import tempfile
 import os
+import sqlite3
 
 __import__('pysqlite3')
 import sys
