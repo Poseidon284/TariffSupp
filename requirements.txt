@@ -1,0 +1,19 @@
+# Core
+streamlit
+python-dotenv
+pandas
+numpy
+
+# PDF handling
+camelot-py[cv]
+PyPDF2
+streamlit-pdf-viewer
+
+# Database / Vector Store
+chromadb
+sentence-transformers
+
+# LangChain + Groq
+langchain
+langchain-core
+langchain-groq

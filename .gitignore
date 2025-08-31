@@ -1,0 +1,5 @@
+.venv
+api.env
+__pycache__
+chroma_data/*
+camtables.zip
