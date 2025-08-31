@@ -5,6 +5,10 @@ from RAG_utils import rag_chain, upsert_file_to_chroma, del_collection
 import tempfile
 import os
 
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 def cleanup():
     del_collection()
 
