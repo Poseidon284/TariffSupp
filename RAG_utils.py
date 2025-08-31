@@ -6,6 +6,12 @@ import camelot  # for tables
 from PyPDF2 import PdfReader
 import pandas as pd
 from genai_utils import setup, get_llm
+import sqlite3
+
+
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 # ---- Clients ----
 api_key = setup("GROQ_API_KEY")
