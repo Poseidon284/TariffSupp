@@ -8,6 +8,7 @@ numpy
 camelot-py[cv]
 PyPDF2
 streamlit-pdf-viewer
+pysqlite3-binary
 
 # Database / Vector Store
 chromadb
