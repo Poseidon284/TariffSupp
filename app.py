@@ -4,6 +4,7 @@ import tempfile
 import os
 import base64
 import sqlite3
+from streamlit.components.v1 import components
 
 __import__('pysqlite3')
 import sys
@@ -68,16 +69,22 @@ with st.sidebar:
     if st.session_state["pdf_path"]:
         with open(st.session_state["pdf_path"], "rb") as f:
             base64_pdf = base64.b64encode(f.read()).decode("utf-8")
-
-        st.markdown(
-            f"""
+        iframe = """
             <iframe src="data:application/pdf;base64,{base64_pdf}" 
                     width="100%" height="700px" 
                     style="border:none; border-radius:8px;" 
                     allowfullscreen></iframe>
-            """,
-            unsafe_allow_html=False
-        )
+            """
+        # st.markdown(
+        #     f"""
+        #     <iframe src="data:application/pdf;base64,{base64_pdf}" 
+        #             width="100%" height="700px" 
+        #             style="border:none; border-radius:8px;" 
+        #             allowfullscreen></iframe>
+        #     """,
+        #     unsafe_allow_html=False
+        # )
+        components.html(html_content, width=100%, height=700px)
     else:
         st.info("👆 Upload a PDF to view it here")
 
