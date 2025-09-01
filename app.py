@@ -70,7 +70,7 @@ with st.sidebar:
         with open(st.session_state["pdf_path"], "rb") as f:
             base64_pdf = base64.b64encode(f.read()).decode("utf-8")
         iframe = f"""
-                <iframe src="data:application/pdf;base64,{base64_pdf}" 
+                <iframe src="file://{os.path.abspath(st.session_state['pdf_path'])}" 
                         width="100%" height="700px" 
                         style="border:none; border-radius:8px;" 
                         allowfullscreen></iframe>
