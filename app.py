@@ -1,9 +1,15 @@
 import streamlit as st
 import atexit
-from RAG_utils import rag_chain, upsert_file_to_chroma, del_collection
 import tempfile
 import os
 import base64
+import sqlite3
+
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+from RAG_utils import rag_chain, upsert_file_to_chroma, del_collection
 
 def cleanup():
     del_collection()
