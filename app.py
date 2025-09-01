@@ -84,7 +84,7 @@ with st.sidebar:
         #     """,
         #     unsafe_allow_html=False
         # )
-        components.html(iframe)
+        components.html(iframe, width="100%", height="700px")
     else:
         st.info("👆 Upload a PDF to view it here")
 
