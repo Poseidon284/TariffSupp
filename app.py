@@ -4,7 +4,7 @@ import tempfile
 import os
 import base64
 import sqlite3
-from streamlit.components.v1 as components
+import streamlit.components.v1 as components
 
 __import__('pysqlite3')
 import sys
