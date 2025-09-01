@@ -69,7 +69,7 @@ with st.sidebar:
     if st.session_state["pdf_path"]:
         with open(st.session_state["pdf_path"], "rb") as f:
             base64_pdf = base64.b64encode(f.read()).decode("utf-8")
-        with open(st.session.state["pdf_path"], "rb") as f:
+        with open(st.session_state["pdf_path"], "rb") as f:
             pdf_viewer(f.read())
         # st.markdown(
         #     f"""
