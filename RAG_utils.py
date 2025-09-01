@@ -9,9 +9,9 @@ from genai_utils import setup, get_llm
 import sqlite3
 
 
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# __import__('pysqlite3')
+# import sys
+# sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 # ---- Clients ----
 api_key = setup("GROQ_API_KEY")
@@ -165,7 +165,7 @@ def rag_answer(query, n_results=5):
         "You are a helpful assistant answering based on supplier and tariff documents.\n"
         "Query: {query}\n\n"
         "Relevant Context:\n{context}\n\n"
-        "Answer the query clearly. If unsure, say you don't know. Do not give answers outside the relevant context."
+        "Answer the query clearly. If unsure, say you don't know. Do not give answers outside the relevant context. Assign a Risk score based on how sound the clauses are from the questions."
     )
     
     chain = prompt | groq_llm
