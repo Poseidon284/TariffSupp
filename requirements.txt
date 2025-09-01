@@ -11,7 +11,7 @@ streamlit-pdf-viewer
 
 # Database / Vector Store
 chromadb
-pysqlite-binary
+pysqlite3-binary
 sentence-transformers
 
 # LangChain + Groq
