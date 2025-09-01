@@ -76,7 +76,7 @@ with st.sidebar:
                     style="border:none; border-radius:8px;" 
                     allowfullscreen></iframe>
             """,
-            unsafe_allow_html=True
+            unsafe_allow_html=False
         )
     else:
         st.info("👆 Upload a PDF to view it here")
