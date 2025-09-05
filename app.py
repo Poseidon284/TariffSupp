@@ -21,7 +21,7 @@ atexit.register(cleanup)
 # Streamlit page setup
 # ---------------------------
 st.set_page_config(page_title="RAG Chatbot", layout="wide")
-st.title("📄 RAG Chatbot - Chat with your data")
+st.title("📄 RAG Chatbot - Chat with your Data")
 
 # ---------------------------
 # SESSION STATE INIT
