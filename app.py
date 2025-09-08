@@ -46,7 +46,7 @@ with st.sidebar:
         placeholder="e.g. Tariff-UAE2024", 
         value=st.session_state["doc_type"] or ""
     )
-    uploaded_file = st.file_uploader("Upload PDF", type=["pdf"], key="pdf_uploader")
+    uploaded_file = st.file_uploader("Upload PDF", type=["pdf","csv","xlsx"], key="pdf_uploader")
 
     if uploaded_file and not st.session_state["pdf_processed"]:
         # Save uploaded file temporarily
