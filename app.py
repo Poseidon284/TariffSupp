@@ -119,7 +119,7 @@ if user_input := st.chat_input("Type your question..."):
     # Display assistant reply immediately
     with st.chat_message("assistant"):
         st.markdown(result["answer"])
-        # if result["sources"]:
-        #     st.markdown("**Sources:**")
-        #     for s in result["sources"]:
-        #         st.markdown(f"- [{s['doc_type']}] {s['source']}: {s['text']}")
+        if result["sources"]:
+            st.markdown("**Sources:**")
+            for s in result["sources"]:
+                st.markdown(f"- [{s['doc_type']}] {s['source']}: {s['text']}")
