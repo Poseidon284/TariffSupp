@@ -47,7 +47,7 @@ with st.sidebar:
         value=st.session_state["doc_type"] or ""
     )
     uploaded_file = st.file_uploader("Upload File", type=["pdf",'csv','xlsx','xls'], key="file_uploader")
-
+    
     if uploaded_file and not st.session_state["pdf_processed"]:
         # Save uploaded file temporarily
         temp_dir = tempfile.mkdtemp()
@@ -57,7 +57,7 @@ with st.sidebar:
 
         # Store in session state
         st.session_state["pdf_path"] = temp_path
-        st.session_state["doc_type"] = doc_type
+        st.session_state["doc_type"] = uploaded_file.type
 
         # Ingest into Chroma (only once per upload)
         with st.spinner("📥 Processing and indexing PDF..."):
