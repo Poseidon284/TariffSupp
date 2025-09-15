@@ -39,15 +39,6 @@ def extract_text_from_pdf(file_path):
     if file_path.lower().endswith(".pdf"):
         reader = PdfReader(file_path)
         return [page.extract_text() for page in reader.pages if page.extract_text()]
-    
-    elif file_path.lower().endswith(".csv"):
-        df = pd.read_csv(file_path)
-        return df.astype(str).values.tolist()  # convert all rows to list of strings
-    
-    elif file_path.lower().endswith((".xlsx", ".xls")):
-        df = pd.read_excel(file_path)
-        return df.astype(str).values.tolist()
-    
     else:
         raise ValueError("Unsupported file format. Supported: PDF, CSV, XLSX, XLS")
 
@@ -123,10 +114,12 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
     elif doc_type=='text/csv':
         tab_df = pd.read_csv(file_path, index_col=None)
         tables.append(tab_df)
+        columns = tab_df.columns.to_list()
         text = chunk_text(tables[0].to_string())
     elif doc_type=='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' or doc_type=='application/vnd.ms-excel':
         tab_df = pd.read_excel(file_path, index_col=None)
         tables.append(tab_df)
+        columns = tab_df.columns.to_list()
         text = chunk_text(tables[0].to_string())
     else:
         return "Incorrect File type"
@@ -168,7 +161,7 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
     print(f"✅ Uploaded {file_path} as {doc_type}")
 
 # ---- Query Chroma ----
-def query_chroma(query, store, n_results=5):
+def query_chroma(query, store, n_results=10):
     query_emb = get_embeddings([query])
     results = store.query(query_embeddings=query_emb, n_results=n_results)
     
@@ -182,7 +175,7 @@ def query_chroma(query, store, n_results=5):
     return chunks
 
 # ---- RAG Answer with Groq ----
-def rag_answer(query, n_results=5):
+def rag_answer(query, n_results=10):
     store = init_chroma()
     chunks = query_chroma(query, store, n_results=n_results)
     context = "\n\n".join([f"[{c['doc_type'].upper()} | {c['source']}] {c['text']}" for c in chunks])
@@ -190,8 +183,9 @@ def rag_answer(query, n_results=5):
     prompt = ChatPromptTemplate.from_template(
         "You are a helpful assistant answering based on supplier and tariff documents.\n"
         "Query: {query}\n\n"
+        "Columns in Table : {SNo,Article,Total Quantity,Total Sales,unit_price,First_Sale,Recent_Sale,Days_in_Market,Unique_purchase_dates,Per_day_Sale,Popularity_Score,Relevance_Score}"\n\n
         "Relevant Context:\n{context}\n\n"
-        "Answer the query clearly. You are alloweed to explain who you are to the user if they ask. If unsure about the answer, say you don't know. Do not give answers outside the relevant context. Assign a Risk score based on how sound the clauses are from the questions."
+        "Answer the query clearly. You are alloweed to explain you are the marketbuddy assistant to the user if they ask. If unsure about the answer, say you don't know. Do not give answers outside the relevant context. Give a confidence score with the answer based on how relevant the information is present in the context."
     )
     
     chain = prompt | groq_llm
