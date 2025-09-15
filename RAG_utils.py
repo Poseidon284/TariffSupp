@@ -114,12 +114,10 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
     elif doc_type=='text/csv':
         tab_df = pd.read_csv(file_path, index_col=None)
         tables.append(tab_df)
-        columns = tab_df.columns.to_list()
         text = chunk_text(tables[0].to_string())
     elif doc_type=='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' or doc_type=='application/vnd.ms-excel':
         tab_df = pd.read_excel(file_path, index_col=None)
         tables.append(tab_df)
-        columns = tab_df.columns.to_list()
         text = chunk_text(tables[0].to_string())
     else:
         return "Incorrect File type"
@@ -175,11 +173,12 @@ def query_chroma(query, store, n_results=10):
     return chunks
 
 # ---- RAG Answer with Groq ----
-def rag_answer(query, n_results=10):
+def rag_answer(query, n_results=10, columns=None):
     store = init_chroma()
     chunks = query_chroma(query, store, n_results=n_results)
     context = "\n\n".join([f"[{c['doc_type'].upper()} | {c['source']}] {c['text']}" for c in chunks])
-    context = f"Columns in Table:{columns}"+context
+    if columns is not None:
+        context = f"Columns in Table:{columns}"+context
     prompt = ChatPromptTemplate.from_template(
         "You are a helpful assistant answering based on supplier and tariff documents.\n"
         "Query: {query}\n\n"
