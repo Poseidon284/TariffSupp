@@ -41,7 +41,7 @@ if "file_name" not in st.session_state:
 # SIDEBAR → PDF Upload + Viewer
 # ---------------------------
 with st.sidebar:
-    st.header("📑 PDF Panel")
+    st.header("📑 File Panel")
 
     file_name = st.text_input(
         "Document name", 
