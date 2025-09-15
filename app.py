@@ -34,17 +34,18 @@ if "doc_type" not in st.session_state:
     st.session_state["doc_type"] = None
 if "pdf_processed" not in st.session_state:
     st.session_state["pdf_processed"] = False
-
+if "file_name" not in st.session_state:
+    st.session_state['file_name'] = None
 # ---------------------------
 # SIDEBAR → PDF Upload + Viewer
 # ---------------------------
 with st.sidebar:
     st.header("📑 PDF Panel")
 
-    doc_type = st.text_input(
-        "Document type & name", 
+    file_name = st.text_input(
+        "Document name", 
         placeholder="e.g. Tariff-UAE2024", 
-        value=st.session_state["doc_type"] or ""
+        value=st.session_state["file_name"] or ""
     )
     uploaded_file = st.file_uploader("Upload File", type=["pdf",'csv','xlsx','xls'], key="file_uploader")
     
@@ -61,7 +62,7 @@ with st.sidebar:
 
         # Ingest into Chroma (only once per upload)
         with st.spinner("📥 Processing and indexing PDF..."):
-            upsert_file_to_chroma(temp_path, doc_type=doc_type)
+            upsert_file_to_chroma(temp_path, name=file_name, doc_type=doc_type)
 
         st.session_state["pdf_processed"] = True
 
