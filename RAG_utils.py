@@ -194,8 +194,8 @@ def rag_answer(query, columns=None, n_columns=10):
         "sources": chunks
     }
 
-def rag_chain(query):
-    result = rag_answer(query)
+def rag_chain(query, columns):
+    result = rag_answer(query, columns)
     return result
 
 def del_collection():
