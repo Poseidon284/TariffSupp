@@ -194,7 +194,7 @@ def rag_answer(query, columns=None, n_columns=10):
         "sources": chunks
     }
 
-def rag_chain(query, columns):
+def rag_chain(query, columns = None):
     result = rag_answer(query, columns)
     return result
 
