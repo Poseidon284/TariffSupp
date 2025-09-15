@@ -179,11 +179,10 @@ def rag_answer(query, n_results=10):
     store = init_chroma()
     chunks = query_chroma(query, store, n_results=n_results)
     context = "\n\n".join([f"[{c['doc_type'].upper()} | {c['source']}] {c['text']}" for c in chunks])
-    
+    context = "Columns in Table:{SNo,Article,Total Quantity,Total Sales,unit_price,First_Sale,Recent_Sale,Days_in_Market,Unique_purchase_dates,Per_day_Sale,Popularity_Score,Relevance_Score}"+context
     prompt = ChatPromptTemplate.from_template(
         "You are a helpful assistant answering based on supplier and tariff documents.\n"
         "Query: {query}\n\n"
-        "Columns in Table : {SNo,Article,Total Quantity,Total Sales,unit_price,First_Sale,Recent_Sale,Days_in_Market,Unique_purchase_dates,Per_day_Sale,Popularity_Score,Relevance_Score}\n\n"
         "Relevant Context:\n{context}\n\n"
         "Answer the query clearly. You are alloweed to explain you are the marketbuddy assistant to the user if they ask. If unsure about the answer, say you don't know. Do not give answers outside the relevant context. Give a confidence score with the answer based on how relevant the information is present in the context."
     )
