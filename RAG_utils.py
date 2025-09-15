@@ -128,7 +128,7 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
         text = chunk_text(tables[0].to_string())
     elif doc_type=='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' or doc_type=='application/vnd.ms-excel':
         tab_df = pd.read_excel(file_path, index_col=None)
-        tables.append(0)
+        tables.append(tab_df)
         text = chunk_text(tables[0].to_string())
     else:
         return "Incorrect File type"
