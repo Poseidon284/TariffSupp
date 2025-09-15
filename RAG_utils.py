@@ -112,7 +112,7 @@ def get_table_chunk_embeddings(table_chunks):
 
 
 # ---- Ingest into Chroma ----
-def upsert_file_to_chroma(file_path, doc_type="general"):
+def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
     store = init_chroma()
     text_chunks = []
     text = ""
@@ -138,7 +138,7 @@ def upsert_file_to_chroma(file_path, doc_type="general"):
         return  
     
     embeddings = get_embeddings(text_chunks)
-    metadatas = [{"doc_type": doc_type, "source": os.path.basename(file_path)} for _ in text_chunks]
+    metadatas = [{"doc_type": file_name, "source": os.path.basename(file_path)} for _ in text_chunks]
     ids = [f"doc_{i}" for i in range(len(text_chunks))]
     
     store.upsert(
