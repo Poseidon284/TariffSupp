@@ -106,7 +106,14 @@ def upsert_file_to_chroma(file_path, doc_type="general"):
     text = extract_text_from_pdf(file_path)
     for t in text:
         text_chunks.extend(chunk_text(t))
-    tables = extract_tables_from_pdf(file_path)
+    if doc_type=="pdf":
+        tables = extract_tables_from_pdf(file_path)
+    elif doc_type=='csv':
+        tables = pd.read_csv(file_path, index_col=None)
+    elif doc_type=='xlsx' or doc_type=='xls':
+        tables = pd.read_excel(file_path, index_col=None)
+    else:
+        tables = []
     table_chunks = []
     for table in tables:
         table_chunks.extend(chunk_dataframe(table, chunk_size=50, overlap=5))
