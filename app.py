@@ -62,7 +62,7 @@ with st.sidebar:
 
         # Ingest into Chroma (only once per upload)
         with st.spinner("📥 Processing and indexing PDF..."):
-            upsert_file_to_chroma(temp_path, name=file_name, doc_type=doc_type)
+            upsert_file_to_chroma(temp_path, name=file_name, doc_type=st.session['doc_type'])
 
         st.session_state["pdf_processed"] = True
 
