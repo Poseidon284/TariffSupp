@@ -36,8 +36,20 @@ def get_embeddings(texts, model="all-MiniLM-L6-v2"):
 
 # ---- Text Extraction ----
 def extract_text_from_pdf(file_path):
-    reader = PdfReader(file_path)
-    return [page.extract_text() for page in reader.pages if page.extract_text()]
+    if file_path.lower().endswith(".pdf"):
+        reader = PdfReader(file_path)
+        return [page.extract_text() for page in reader.pages if page.extract_text()]
+    
+    elif file_path.lower().endswith(".csv"):
+        df = pd.read_csv(file_path)
+        return df.astype(str).values.tolist()  # convert all rows to list of strings
+    
+    elif file_path.lower().endswith((".xlsx", ".xls")):
+        df = pd.read_excel(file_path)
+        return df.astype(str).values.tolist()
+    
+    else:
+        raise ValueError("Unsupported file format. Supported: PDF, CSV, XLSX, XLS")
 
 def extract_tables_from_pdf(file_path):
     try:
