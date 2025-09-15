@@ -120,8 +120,6 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
     if doc_type=="application/pdf":
         tables = extract_tables_from_pdf(file_path)
         text = extract_text_from_pdf(file_path)
-        for t in text:
-            text_chunks.extend(chunk_text(t))
     elif doc_type=='text/csv':
         tab_df = pd.read_csv(file_path, index_col=None)
         tables.append(tab_df)
@@ -135,10 +133,13 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
     table_chunks = []
     for table in tables:
         table_chunks.extend(chunk_dataframe(table, chunk_size=500, overlap=50))
+
+    for t in text:
+            text_chunks.extend(chunk_text(t))
     
     if not text_chunks:
-        print(f"No extractable text from {file_path}")
-        return  
+        print(f"No extractable text from {file_path}")  
+        return
     
     embeddings = get_embeddings(text_chunks)
     metadatas = [{"doc_type": file_name, "source": os.path.basename(file_path)} for _ in text_chunks]
