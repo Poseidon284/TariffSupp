@@ -159,7 +159,7 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
     print(f"✅ Uploaded {file_path} as {doc_type}")
 
 # ---- Query Chroma ----
-def query_chroma(query, store, n_results=10):
+def query_chroma(query, store, n_results=5):
     query_emb = get_embeddings([query])
     results = store.query(query_embeddings=query_emb, n_results=n_results)
     
@@ -173,7 +173,7 @@ def query_chroma(query, store, n_results=10):
     return chunks
 
 # ---- RAG Answer with Groq ----
-def rag_answer(query, columns=None, n_results=10):
+def rag_answer(query, columns=None, n_results=5):
     store = init_chroma()
     chunks = query_chroma(query, store, n_results=n_results)
     context = "\n\n".join([f"[{c['doc_type'].upper()} | {c['source']}] {c['text']}" for c in chunks])
