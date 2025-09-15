@@ -121,9 +121,11 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
         text = extract_text_from_pdf(file_path)
     elif doc_type=='text/csv':
         tables = pd.read_csv(file_path, index_col=None)
+        tables = pd.DataFrame(tables)
         text = tables.to_string()
     elif doc_type=='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' or doc_type=='application/vnd.ms-excel':
         tables = pd.read_excel(file_path, index_col=None)
+        tables = pd.DataFrame(tables)
         text = tables.to_string()
     else:
         tables = []
