@@ -133,7 +133,7 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
         text_chunks.extend(chunk_text(t))
     table_chunks = []
     for table in tables:
-        table_chunks.extend(chunk_dataframe(table, chunk_size=50, overlap=5))
+        table_chunks.extend(chunk_dataframe(table, chunk_size=500, overlap=50))
     
     if not text_chunks:
         print(f"No extractable text from {file_path}")
