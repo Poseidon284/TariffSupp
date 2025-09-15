@@ -123,11 +123,11 @@ def upsert_file_to_chroma(file_path, file_name, doc_type="general"):
     elif doc_type=='text/csv':
         tab_df = pd.read_csv(file_path, index_col=None)
         tables.append(tab_df)
-        text = tables.to_string()
+        text = tables[0].to_string()
     elif doc_type=='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' or doc_type=='application/vnd.ms-excel':
         tab_df = pd.read_excel(file_path, index_col=None)
         tables.append(0)
-        text = tables.to_string()
+        text = tables[0].to_string()
     else:
         return "Incorrect File type"
     for t in text:
