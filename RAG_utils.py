@@ -173,7 +173,7 @@ def query_chroma(query, store, n_results=10):
     return chunks
 
 # ---- RAG Answer with Groq ----
-def rag_answer(query, n_results=10, columns=None):
+def rag_answer(query, columns=None, n_columns=10):
     store = init_chroma()
     chunks = query_chroma(query, store, n_results=n_results)
     context = "\n\n".join([f"[{c['doc_type'].upper()} | {c['source']}] {c['text']}" for c in chunks])
