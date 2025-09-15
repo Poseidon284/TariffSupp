@@ -70,7 +70,8 @@ with st.sidebar:
         with open(st.session_state["pdf_path"], "rb") as f:
             base64_pdf = base64.b64encode(f.read()).decode("utf-8")
         with open(st.session_state["pdf_path"], "rb") as f:
-            pdf_viewer(f.read())
+            if st.session_state['doc_type'] == 'pdf':
+                pdf_viewer(f.read())
         # st.markdown(
         #     f"""
         #     <iframe src="data:application/pdf;base64,{base64_pdf}" 
