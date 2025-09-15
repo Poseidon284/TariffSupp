@@ -4,6 +4,7 @@ import tempfile
 import os
 import base64
 import sqlite3
+import pandas as pd
 from streamlit_pdf_viewer import pdf_viewer
 
 __import__('pysqlite3')
@@ -73,6 +74,9 @@ with st.sidebar:
         with open(st.session_state["pdf_path"], "rb") as f:
             if uploaded_file.type == 'application/pdf':
                 pdf_viewer(f.read())
+            elif uploaded_file.type == 'text/csv':
+                columns = pd.read_csv(f, index_col=0)
+        
         # st.markdown(
         #     f"""
         #     <iframe src="data:application/pdf;base64,{base64_pdf}" 
@@ -107,7 +111,7 @@ if user_input := st.chat_input("Type your question..."):
         st.markdown(user_input)
 
     # Get response from RAG
-    result = rag_chain(user_input)
+    result = rag_chain(user_input, columns)
 
     bot_msg = {
         "role": "assistant",
