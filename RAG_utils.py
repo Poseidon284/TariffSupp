@@ -187,7 +187,7 @@ def rag_answer(query, n_results=5):
         "You are a helpful assistant answering based on supplier and tariff documents.\n"
         "Query: {query}\n\n"
         "Relevant Context:\n{context}\n\n"
-        "Answer the query clearly. If unsure, say you don't know. Do not give answers outside the relevant context. Assign a Risk score based on how sound the clauses are from the questions."
+        "Answer the query clearly. You are alloweed to explain who you are to the user if they ask. If unsure about the answer, say you don't know. Do not give answers outside the relevant context. Assign a Risk score based on how sound the clauses are from the questions."
     )
     
     chain = prompt | groq_llm
