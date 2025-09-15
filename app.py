@@ -70,7 +70,7 @@ with st.sidebar:
         with open(st.session_state["pdf_path"], "rb") as f:
             base64_pdf = base64.b64encode(f.read()).decode("utf-8")
         with open(st.session_state["pdf_path"], "rb") as f:
-            if uploaded_file.type == 'pdf':
+            if uploaded_file.type == 'application/pdf':
                 pdf_viewer(f.read())
         # st.markdown(
         #     f"""
