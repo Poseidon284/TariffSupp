@@ -78,7 +78,7 @@ def chunk_text(text, chunk_size=500, overlap=50):
     return chunks
 
 #For Table Chunking
-def chunk_dataframe(df, chunk_size=50, overlap=5):
+def chunk_dataframe(df, chunk_size=500, overlap=50):
     if overlap >= chunk_size:
         raise ValueError("overlap must be smaller than chunk_size")
 
