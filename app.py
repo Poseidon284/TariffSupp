@@ -113,10 +113,11 @@ if user_input := st.chat_input("Type your question..."):
         st.markdown(user_input)
 
     # Get response from RAG
-    if uploaded_file.type == 'text/csv':
-        result = rag_chain(user_input, columns)
-    else:
+    if uploaded_file.type == 'application/pdf':
         result = rag_chain(user_input)
+    else:
+        columns = columns.columns.tolist()
+        result = rag_chain(user_input,columns)
         
     bot_msg = {
         "role": "assistant",
