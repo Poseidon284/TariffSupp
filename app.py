@@ -76,6 +76,8 @@ with st.sidebar:
                 pdf_viewer(f.read())
             elif uploaded_file.type == 'text/csv':
                 columns = pd.read_csv(f, index_col=0)
+            else:
+                columns = pd.read_excel(f, index_col=0)
         
         # st.markdown(
         #     f"""
@@ -111,8 +113,11 @@ if user_input := st.chat_input("Type your question..."):
         st.markdown(user_input)
 
     # Get response from RAG
-    result = rag_chain(user_input, columns)
-
+    if uploaded_file.type == 'text/csv':
+        result = rag_chain(user_input, columns)
+    else:
+        result = rag_chain(user_input)
+        
     bot_msg = {
         "role": "assistant",
         "content": result["answer"],
@@ -123,7 +128,7 @@ if user_input := st.chat_input("Type your question..."):
     # Display assistant reply immediately
     with st.chat_message("assistant"):
         st.markdown(result["answer"])
-        if result["sources"]:
-            st.markdown("**Sources:**")
-            for s in result["sources"]:
-                st.markdown(f"- [{s['doc_type']}] {s['source']}: {s['text']}")
+        # if result["sources"]:
+        #     st.markdown("**Sources:**")
+        #     for s in result["sources"]:
+        #         st.markdown(f"- [{s['doc_type']}] {s['source']}: {s['text']}")
