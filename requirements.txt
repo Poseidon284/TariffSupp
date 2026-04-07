@@ -10,7 +10,8 @@ PyPDF2
 streamlit-pdf-viewer
 
 # Database / Vector Store
-chromadb
+protobuf==3.20.3
+chromadb==0.4.24
 pysqlite3-binary
 sentence-transformers
 
