@@ -13,7 +13,9 @@ streamlit-pdf-viewer
 protobuf==3.20.3
 chromadb==0.4.24
 pysqlite3-binary
-sentence-transformers
+torch==2.1.2
+transformers==4.38.2
+sentence-transformers==2.6.1
 
 # LangChain + Groq
 langchain
